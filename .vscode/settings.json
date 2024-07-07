@@ -1,0 +1,5 @@
+{
+    "editor.defaultFormatter": "Dart-Code.flutter",
+    "notebook.defaultFormatter": "Dart-Code.flutter",
+    "dart.enableSdkFormatter": true
+}
