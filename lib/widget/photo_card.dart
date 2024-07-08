@@ -5,6 +5,18 @@ class PhotoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      color: Colors.amber,
+      child: Stack(
+        children: [
+          Image.asset(
+            'assets/images/test.jpeg',
+            fit: BoxFit.cover,
+            height: 200,
+          ),
+          const Text("#MOTD #워킹포미라클"),
+        ],
+      ),
+    );
   }
 }

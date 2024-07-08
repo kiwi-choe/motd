@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:motd/screens/recent_screen.dart';
-import 'package:motd/widget/bottom_nav_bar.dart';
+import 'package:motd/screens/motd_screen.dart';
+import 'package:motd/screens/notice_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen(BuildContext context, {super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final int _currentIndex = 0;
-
-  final List<Widget> _tabs = [
-    const MotdScreen(),
-    const RecentScreen(),
+  final List<Widget> _tabs = const [
+    NoticeScreen(),
+    MotdScreen(),
   ];
 
   @override
@@ -23,31 +16,42 @@ class _HomeScreenState extends State<HomeScreen> {
       length: _tabs.length,
       child: Scaffold(
         appBar: AppBar(
+          actions: const [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Icon(Icons.question_answer),
+            ),
+          ],
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          bottom: const TabBar(
-            tabs: [
-              Tab(icon: Icon(Icons.home), text: 'MOTD'),
-              Tab(icon: Icon(Icons.favorite), text: '최신'),
-            ],
+          flexibleSpace: SafeArea(
+            child: Container(
+              alignment: Alignment.center,
+              child: _getTabBar(),
+            ),
           ),
           elevation: 0,
         ),
         body: TabBarView(
           children: _tabs,
         ),
-        bottomNavigationBar: const BottomNavBar(),
       ),
     );
   }
-}
 
-class MotdScreen extends StatelessWidget {
-  const MotdScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Motd Screen'),
+  TabBar _getTabBar() {
+    return const TabBar(
+      tabs: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8),
+          child: Tab(text: '공지'),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8),
+          child: Tab(text: 'MOTD'),
+        ),
+      ],
+      tabAlignment: TabAlignment.center,
+      dividerHeight: 0,
     );
   }
 }
