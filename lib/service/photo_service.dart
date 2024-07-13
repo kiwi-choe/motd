@@ -6,7 +6,7 @@ import 'package:motd/service/photo_sort_type.dart';
 
 class PhotoService {
   // todo change to firebase service
-  // final String baseUrl = "https://picsum.photos/";
+  // final String baseUrl = "https://picsum.photos/"
   final String baseUrl = "https://official-joke-api.appspot.com/random_joke";
   final String photo = "200";
 

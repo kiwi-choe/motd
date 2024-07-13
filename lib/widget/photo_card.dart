@@ -1,20 +1,36 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:motd/service/model/photo_model.dart';
 
 class PhotoCard extends StatelessWidget {
-  const PhotoCard({super.key});
+  final PhotoModel photoModel;
+
+  const PhotoCard({
+    super.key,
+    required this.photoModel,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.amber,
-      child: Stack(
+      color: Colors.lightBlue[50],
+      child: Column(
         children: [
-          Image.asset(
-            'assets/images/test.jpeg',
-            fit: BoxFit.cover,
-            height: 200,
+          kIsWeb
+              ? Image.network(
+                  photoModel.image.path,
+                  fit: BoxFit.fill,
+                  height: 200,
+                )
+              : Image.file(
+                  photoModel.image,
+                  fit: BoxFit.fill,
+                  height: 200,
+                ),
+          Text(
+            photoModel.content,
+            style: const TextStyle(overflow: TextOverflow.ellipsis),
           ),
-          const Text("#MOTD #워킹포미라클"),
         ],
       ),
     );

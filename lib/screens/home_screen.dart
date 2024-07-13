@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
           actions: const [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Icon(Icons.question_answer),
+              child: Icon(Icons.question_mark_rounded),
             ),
           ],
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,

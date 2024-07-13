@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class NoticeScreen extends StatelessWidget {
   const NoticeScreen({super.key});
@@ -10,6 +9,13 @@ class NoticeScreen extends StatelessWidget {
       padding: EdgeInsets.all(16.0),
       child: Column(
         children: [
+          NoticeCard(
+            title: "Miracle On Thursday in summer이 뭐징",
+            color: Colors.purple,
+          ),
+          SizedBox(
+            height: 8,
+          ),
           NoticeCard(title: "7월 25일 워킹포미라클"),
           SizedBox(
             height: 8,
@@ -27,18 +33,20 @@ class NoticeScreen extends StatelessWidget {
 
 class NoticeCard extends StatelessWidget {
   final String title;
+  final Color? color;
 
   const NoticeCard({
     super.key,
     required this.title,
+    this.color = Colors.blue,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.blue[100],
+      color: color?.withOpacity(0.5),
       child: InkWell(
-        splashColor: Colors.blue.withAlpha(30),
+        splashColor: color?.withAlpha(30),
         onTap: () {
           debugPrint('Card tapped.');
         },
@@ -52,18 +60,3 @@ class NoticeCard extends StatelessWidget {
     );
   }
 }
-
-  // static const List<Widget> _widgetOptions = <Widget>[
-  //   Text(
-  //     'Index 0: Home',
-  //     style: optionStyle,
-  //   ),
-  //   Text(
-  //     'Index 1: Business',
-  //     style: optionStyle,
-  //   ),
-  //   Text(
-  //     'Index 2: School',
-  //     style: optionStyle,
-  //   ),
-  // ];
