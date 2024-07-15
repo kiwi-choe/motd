@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:motd/screens/photo_editor/photo_editor_screen.dart';
-import 'package:motd/service/model/photo_model.dart';
+import 'package:motd/service/model/feed_model.dart';
 import 'package:motd/widget/photo_card.dart';
 
 class MotdScreen extends StatefulWidget {
@@ -11,7 +11,7 @@ class MotdScreen extends StatefulWidget {
 }
 
 class _MotdScreenState extends State<MotdScreen> {
-  List<PhotoModel> photoCards = [];
+  List<FeedModel> photoCards = [];
 
   Future<void> _navigateAndDisplaySelection(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
@@ -22,7 +22,7 @@ class _MotdScreenState extends State<MotdScreen> {
     );
     setState(() {
       debugPrint("navigate pop result: $result");
-      photoCards.add(result as PhotoModel);
+      photoCards.add(result as FeedModel);
     });
   }
 

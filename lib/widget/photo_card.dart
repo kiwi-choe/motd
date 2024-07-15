@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:motd/service/model/photo_model.dart';
+import 'package:motd/service/model/feed_model.dart';
 
 class PhotoCard extends StatelessWidget {
-  final PhotoModel photoModel;
+  final FeedModel photoModel;
 
   const PhotoCard({
     super.key,
