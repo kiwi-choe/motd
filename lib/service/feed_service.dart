@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+import 'package:motd/main.dart';
 import 'package:motd/service/model/feed_model.dart';
 import 'package:motd/service/model/feed_response.dart';
 import 'package:motd/service/feed_query.dart';
@@ -16,10 +18,7 @@ class FeedService {
   final String photo = "200";
 
   final FirebaseFirestore db = FirebaseFirestore.instance;
-  // final FirebaseStorage storage = FirebaseStorage.instance;
-
-  // image upload
-  final storageRef = FirebaseStorage.instance.ref();
+  final FirebaseStorage storage = FirebaseStorage.instance;
 
   // void getPhotos({FeedQuery? type = FeedQuery.recent}) async {
   //   // final url = Uri.parse('$baseUrl/$photo');
@@ -58,11 +57,9 @@ class FeedService {
       );
 
   void postFeed(FeedModel feed) async {
+    final String imageUrl = await _uploadImage(feed.image);
+
     CollectionReference feedsRef = db.collection('feeds');
-
-    // 이미지 업로드
-    final String imageUrl = await uploadImage(feed.image);
-
     try {
       // 정보를 추가할 때, 자동으로 생성된 ID를 사용
       await feedsRef
@@ -71,28 +68,25 @@ class FeedService {
             imageUrl: imageUrl,
           ).toJson())
           .then(
-            (docSnapshot) =>
-                debugPrint('Added data with ID: ${docSnapshot.id}'),
+            (docSnapshot) => logger.d('Added data with ID: ${docSnapshot.id}'),
           );
     } catch (e) {
-      debugPrint('Error adding document: $e');
+      logger.e('Error adding document: $e');
     }
   }
 
-  Future<String> uploadImage(io.File imageFile) async {
+  Future<String> _uploadImage(XFile imageFile) async {
     final String dateTime = DateTime.now().millisecondsSinceEpoch.toString();
-    final imageRef = storageRef.child("feed_image/motd_$dateTime");
-
-    final metadata = SettableMetadata(contentType: 'image/jpeg');
+    final imageRef = storage.ref("feed_image/motd_$dateTime");
+    final metadata = SettableMetadata(contentType: "image/jpeg");
 
     UploadTask uploadTask;
     if (kIsWeb) {
       uploadTask = imageRef.putData(await imageFile.readAsBytes(), metadata);
     } else {
-      uploadTask = imageRef.putFile(io.File(imageFile.path));
+      uploadTask = imageRef.putFile(io.File(imageFile.path), metadata);
     }
 
-    // return await uploadTask.whenComplete(() => null);
     final snapshot = await uploadTask.whenComplete(() => null);
     return snapshot.ref.getDownloadURL();
   }

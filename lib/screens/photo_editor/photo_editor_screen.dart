@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:motd/main.dart';
 import 'package:motd/service/feed_service.dart';
 import 'package:motd/service/model/feed_model.dart';
 import 'package:motd/widget/edittext_form.dart';
@@ -16,17 +17,18 @@ class PhotoEditorScreen extends StatefulWidget {
 }
 
 class _PhotoEditorScreenState extends State<PhotoEditorScreen> {
-  File? _image;
+  XFile? _image;
   final picker = ImagePicker();
   late String _editContent = "";
 
   //Image Picker function to get image from gallery
   Future getImageFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile =
+        await picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {
-        _image = File(pickedFile.path);
+        _image = pickedFile;
       }
     });
   }
@@ -37,7 +39,7 @@ class _PhotoEditorScreenState extends State<PhotoEditorScreen> {
 
     setState(() {
       if (pickedFile != null) {
-        _image = File(pickedFile.path);
+        _image = pickedFile;
       }
     });
   }
@@ -118,16 +120,13 @@ class _PhotoEditorScreenState extends State<PhotoEditorScreen> {
     );
   }
 
-  void _saveMotd({File? image, required String content}) {
-    // if (image != null) {
-    //   Navigator.pop(context, FeedModel(image, content));
-    // } else {
-    //   debugPrint("File image is null");
-    // }
+  void _saveMotd({XFile? image, required String content}) async {
+    // FeedService().test();
     if (image != null) {
       FeedService().postFeed(FeedModel(image, content));
+      Navigator.pop(context);
     } else {
-      debugPrint("File image is null");
+      logger.d("File image is null");
     }
   }
 
@@ -139,7 +138,7 @@ class _PhotoEditorScreenState extends State<PhotoEditorScreen> {
               fit: BoxFit.fill,
             )
           : Image.file(
-              _image!,
+              File(_image!.path),
               fit: BoxFit.fill,
             ),
     );

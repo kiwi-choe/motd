@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:motd/service/model/feed_model.dart';
@@ -23,7 +25,7 @@ class PhotoCard extends StatelessWidget {
                   height: 200,
                 )
               : Image.file(
-                  photoModel.image,
+                  File(photoModel.image.path),
                   fit: BoxFit.fill,
                   height: 200,
                 ),

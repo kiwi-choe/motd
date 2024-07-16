@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:motd/screens/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:motd/service/feed_service.dart';
 import 'firebase_options.dart';
+import 'package:logger/logger.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,3 +30,7 @@ class App extends StatelessWidget {
     );
   }
 }
+
+var logger = Logger(
+  printer: PrettyPrinter(),
+);

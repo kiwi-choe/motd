@@ -1,7 +1,7 @@
-import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class FeedModel {
-  final File image;
+  final XFile image;
   final String content;
 
   const FeedModel(

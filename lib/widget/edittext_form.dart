@@ -42,7 +42,6 @@ class _EditTextFormState extends State<EditTextForm> {
   void _onTextChanged() {
     final text = myController.text;
     widget.getContent(text);
-    print('Second text field: $text (${text.characters.length})');
   }
 
   @override
