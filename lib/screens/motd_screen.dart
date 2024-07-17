@@ -1,6 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:motd/main.dart';
 import 'package:motd/screens/photo_editor/photo_editor_screen.dart';
+import 'package:motd/service/feed_query.dart';
+import 'package:motd/service/feed_service.dart';
 import 'package:motd/service/model/feed_model.dart';
+import 'package:motd/service/model/feed_response.dart';
 import 'package:motd/widget/photo_card.dart';
 
 class MotdScreen extends StatefulWidget {
@@ -11,7 +17,31 @@ class MotdScreen extends StatefulWidget {
 }
 
 class _MotdScreenState extends State<MotdScreen> {
+  // late final AppLifecycleListener _listener;
+  // late AppLifecycleState? _state;
+
+  final FeedService _feedService = FeedService();
+  var scroll = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+
+    // _state = SchedulerBinding.instance.lifecycleState;
+    // _listener = AppLifecycleListener(
+    //   onResume: () {
+    //     FeedService().getFeedStream(FeedQuery.recent);
+    //   },
+    // );
+  }
+
+  @override
+  void dispose() {
+    // _listener.dispose();
+    super.dispose();
+  }
+
   List<FeedModel> photoCards = [];
+  FeedQuery query = FeedQuery.recent;
 
   Future<void> _navigateAndDisplaySelection(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
@@ -44,40 +74,67 @@ class _MotdScreenState extends State<MotdScreen> {
       backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Card.filled(
-            color: Colors.purple[100],
-            child: Container(
-              alignment: Alignment.center,
-              width: double.infinity,
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 24.0),
-                child: Text(
-                  'Miracle On Thursday in summer',
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
-              scrollDirection: Axis.vertical,
-              itemCount: photoCards.length,
-              itemBuilder: (context, index) {
-                debugPrint('index: $index');
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: PhotoCard(photoModel: photoCards[index]),
+          StreamBuilder<QuerySnapshot<FeedResponse>>(
+            stream: _feedService.getFeedStream(FeedQuery.recent),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text(snapshot.error.toString()),
                 );
-              },
-            ),
-          ),
+              }
+
+              if (!snapshot.hasData) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              final data = snapshot.requireData;
+              return GridView.builder(
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3, // number of items in each row
+                  mainAxisSpacing: 8.0, // spacing between rows
+                  crossAxisSpacing: 8.0, // spacing between columns
+                ),
+                scrollDirection: Axis.vertical,
+                itemCount: data.size,
+                itemBuilder: (context, index) {
+                  debugPrint('index: $index');
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: PhotoCard(photoModel: data.docs[index].data()),
+                  );
+                },
+              );
+              // return Column(
+              //   children: [PhotoCard(photoModel: data.docs.first.data())],
+              // );
+            },
+          )
         ],
+        // Expanded(
+        //   child: GridView.builder(
+        //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        //       crossAxisCount: 2,
+        //     ),
+        //     scrollDirection: Axis.vertical,
+        //     itemCount: 8,
+        //     itemBuilder: (context, index) {
+        //       debugPrint('index: $index');
+        //       return Padding(
+        //         padding: const EdgeInsets.all(8.0),
+        //         // child: PhotoCard(photoModel: photoCards[index]),
+        //         child: SizedBox(
+        //           height: 50,
+        //           child: Container(
+        //               color: Colors.lightBlue[50],
+        //               child: const Text("test!!")),
+        //         ),
+        //       );
+        //     },
+        //   ),
+        // ),
       ),
     );
   }

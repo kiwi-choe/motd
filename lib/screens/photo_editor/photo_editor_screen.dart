@@ -123,7 +123,7 @@ class _PhotoEditorScreenState extends State<PhotoEditorScreen> {
   void _saveMotd({XFile? image, required String content}) async {
     // FeedService().test();
     if (image != null) {
-      FeedService().postFeed(FeedModel(image, content));
+      FeedService().postFeed(FeedModel(image, "", content));
       Navigator.pop(context);
     } else {
       logger.d("File image is null");
