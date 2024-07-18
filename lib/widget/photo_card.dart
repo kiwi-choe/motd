@@ -13,41 +13,51 @@ class PhotoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      clipBehavior: Clip.hardEdge,
-      child: photoModel.content.isNotEmpty
-          ? Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: ClipRect(
-                    child: Align(
-                        alignment: Alignment.topCenter,
-                        child: SizedBox.expand(
-                          child: CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            placeholder: (context, url) =>
-                                const ImagePlaceholder(),
-                            imageUrl: photoModel.imageUrl,
-                          ),
-                        )),
+    return photoModel.content.isNotEmpty
+        ? Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: Card(
+                  elevation: 0,
+                  clipBehavior: Clip.hardEdge,
+                  child: Align(
+                      alignment: Alignment.topCenter,
+                      child: SizedBox.expand(
+                        child: CachedNetworkImage(
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) =>
+                              const ImagePlaceholder(),
+                          imageUrl: photoModel.imageUrl,
+                        ),
+                      )),
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  child: Text(
+                    textAlign: TextAlign.start,
+                    photoModel.content,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w300,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
-                Text(
-                  photoModel.content,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ) // image and content
-          : CachedNetworkImage(
+              )
+            ],
+          ) // image and content
+        : Card(
+            elevation: 0,
+            clipBehavior: Clip.hardEdge,
+            child: CachedNetworkImage(
               fit: BoxFit.cover,
               placeholder: (context, url) => const ImagePlaceholder(),
               imageUrl: photoModel.imageUrl,
             ), // image only
-    );
+          );
   }
 }
