@@ -69,7 +69,6 @@ class _MotdScreenState extends State<MotdScreen> {
           ),
         ],
       ),
-      backgroundColor: Colors.grey[100],
       body: StreamBuilder<QuerySnapshot<FeedResponse>>(
         stream: _feedService.getFeedStream(FeedQuery.recent),
         builder: (context, snapshot) {

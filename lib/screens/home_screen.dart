@@ -40,6 +40,10 @@ class HomeScreen extends StatelessWidget {
 
   TabBar _getTabBar() {
     return const TabBar(
+      labelStyle: TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize: 20,
+      ),
       tabs: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8),
