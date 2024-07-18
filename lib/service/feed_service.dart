@@ -74,7 +74,6 @@ class FeedService {
         .collection('feeds')
         .withConverter<FeedResponse>(
       fromFirestore: (snapshots, _) {
-        logger.d(snapshots);
         return FeedResponse.fromJson(snapshots.data()!);
       },
       toFirestore: (feed, _) {

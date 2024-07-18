@@ -5,6 +5,7 @@ import 'package:motd/service/feed_query.dart';
 import 'package:motd/service/feed_service.dart';
 import 'package:motd/service/model/feed_model.dart';
 import 'package:motd/service/model/feed_response.dart';
+import 'package:motd/widget/photo_card.dart';
 
 class MotdScreen extends StatefulWidget {
   const MotdScreen({super.key});
@@ -56,34 +57,36 @@ class _MotdScreenState extends State<MotdScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            const SizedBox(width: 16),
-            FloatingActionButton(
-              onPressed: () {
-                _navigateAndDisplaySelection(context);
-              },
-              child: const Icon(Icons.add),
-            ),
-          ],
-        ),
-        backgroundColor: Colors.white,
-        body: StreamBuilder<QuerySnapshot<FeedResponse>>(
-          stream: _feedService.getFeedStream(FeedQuery.recent),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Center(
-                child: Text(snapshot.error.toString()),
-              );
-            }
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          const SizedBox(width: 16),
+          FloatingActionButton(
+            onPressed: () {
+              _navigateAndDisplaySelection(context);
+            },
+            child: const Icon(Icons.add),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.grey[100],
+      body: StreamBuilder<QuerySnapshot<FeedResponse>>(
+        stream: _feedService.getFeedStream(FeedQuery.recent),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(snapshot.error.toString()),
+            );
+          }
 
-            if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
-            }
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-            final data = snapshot.requireData;
-            return GridView.builder(
+          final data = snapshot.requireData;
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: GridView.builder(
               shrinkWrap: true,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, // number of items in each row
@@ -95,44 +98,13 @@ class _MotdScreenState extends State<MotdScreen> {
               itemBuilder: (context, index) {
                 debugPrint('index: $index');
                 return GridTile(
-                  child: Image.network(data.docs[index].data().imageUrl),
+                  child: PhotoCard(photoModel: data.docs[index].data()),
                 );
-
-                // return Padding(
-                //   padding: const EdgeInsets.all(8.0),
-                //   child: PhotoCard(photoModel: data.docs[index].data()),
-                // );
               },
-            );
-            // return Column(
-            //   children: [PhotoCard(photoModel: data.docs.first.data())],
-            // );
-          },
-        )
-
-        // Expanded(
-        //   child: GridView.builder(
-        //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        //       crossAxisCount: 2,
-        //     ),
-        //     scrollDirection: Axis.vertical,
-        //     itemCount: 8,
-        //     itemBuilder: (context, index) {
-        //       debugPrint('index: $index');
-        //       return Padding(
-        //         padding: const EdgeInsets.all(8.0),
-        //         // child: PhotoCard(photoModel: photoCards[index]),
-        //         child: SizedBox(
-        //           height: 50,
-        //           child: Container(
-        //               color: Colors.lightBlue[50],
-        //               child: const Text("test!!")),
-        //         ),
-        //       );
-        //     },
-        //   ),
-        // ),
-
-        );
+            ),
+          );
+        },
+      ),
+    );
   }
 }
