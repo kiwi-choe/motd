@@ -1,61 +1,70 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:motd/main.dart';
+import 'package:motd/service/model/notice_response.dart';
+import 'package:motd/service/notice_service.dart';
 
-class NoticeScreen extends StatelessWidget {
+class NoticeScreen extends StatefulWidget {
   const NoticeScreen({super.key});
 
   @override
+  State<NoticeScreen> createState() => _NoticeScreenState();
+}
+
+class _NoticeScreenState extends State<NoticeScreen> {
+  final NoticeService _service = NoticeService();
+
+  @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          NoticeCard(
-            title: "Miracle On Thursday in summer이 뭐징",
-            color: Colors.purple,
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          NoticeCard(title: "7월 25일 워킹포미라클"),
-          SizedBox(
-            height: 8,
-          ),
-          NoticeCard(title: "8월 15일 장애아동센터 방문"),
-          SizedBox(
-            height: 8,
-          ),
-          NoticeCard(title: "8월 25일 ~~~~~~~~~"),
-        ],
+    return Scaffold(
+      body: StreamBuilder<QuerySnapshot<NoticeResponse>>(
+        stream: _service.getNoticeStream(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(snapshot.error.toString()),
+            );
+          }
+
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          final data = snapshot.requireData;
+          logger.d("notice data: ${data.docs.first.data().toString()}");
+
+          return ListView.builder(
+              itemCount: data.size,
+              itemBuilder: (context, index) {
+                logger.d("notice: $index");
+                return data.size > 0
+                    ? NoticeCard(
+                        notice: data.docs[index].data(),
+                      )
+                    : const Center(
+                        child: Text("there is no notice"),
+                      );
+              });
+        },
       ),
     );
   }
 }
 
 class NoticeCard extends StatelessWidget {
-  final String title;
-  final Color? color;
+  final NoticeResponse notice;
 
   const NoticeCard({
     super.key,
-    required this.title,
-    this.color = Colors.blue,
+    required this.notice,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: color?.withOpacity(0.5),
-      child: InkWell(
-        splashColor: color?.withAlpha(30),
-        onTap: () {
-          debugPrint('Card tapped.');
-        },
-        child: Container(
-          alignment: Alignment.center,
-          width: double.infinity,
-          height: 100,
-          child: Text(title),
-        ),
+      color: Colors.blue.withOpacity(0.5),
+      child: ListTile(
+        title: Text(notice.toString()),
       ),
     );
   }

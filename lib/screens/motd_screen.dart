@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:motd/screens/photo_editor/photo_editor_screen.dart';
 import 'package:motd/service/feed_query.dart';
 import 'package:motd/service/feed_service.dart';
-import 'package:motd/service/model/feed_model.dart';
 import 'package:motd/service/model/feed_response.dart';
 import 'package:motd/widget/photo_card.dart';
 
@@ -15,30 +14,7 @@ class MotdScreen extends StatefulWidget {
 }
 
 class _MotdScreenState extends State<MotdScreen> {
-  // late final AppLifecycleListener _listener;
-  // late AppLifecycleState? _state;
-
   final FeedService _feedService = FeedService();
-  var scroll = ScrollController();
-  @override
-  void initState() {
-    super.initState();
-
-    // _state = SchedulerBinding.instance.lifecycleState;
-    // _listener = AppLifecycleListener(
-    //   onResume: () {
-    //     FeedService().getFeedStream(FeedQuery.recent);
-    //   },
-    // );
-  }
-
-  @override
-  void dispose() {
-    // _listener.dispose();
-    super.dispose();
-  }
-
-  List<FeedModel> photoCards = [];
   FeedQuery query = FeedQuery.recent;
 
   Future<void> _navigateAndDisplaySelection(BuildContext context) async {

@@ -10,11 +10,4 @@ class FeedModel {
     this.imagePath,
     this.content,
   );
-
-  // Map<String, dynamic> toJson() {
-  //   return {
-  //     'image': image,
-  //     'content': content,
-  //   };
-  // }
 }

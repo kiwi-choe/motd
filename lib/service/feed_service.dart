@@ -10,25 +10,8 @@ import 'package:motd/service/model/feed_response.dart';
 import 'package:motd/service/feed_query.dart';
 
 class FeedService {
-  // todo change to firebase service
-  // final String baseUrl = "https://picsum.photos/"
-  final String baseUrl = "https://official-joke-api.appspot.com/random_joke";
-  final String photo = "200";
-
   final FirebaseFirestore db = FirebaseFirestore.instance;
   final FirebaseStorage storage = FirebaseStorage.instance;
-
-  // void getFeeds() {
-  //   db.collection("feeds").get().then(
-  //     (querySnapshot) {
-  //       print("Successfully completed");
-  //       for (var docSnapshot in querySnapshot.docs) {
-  //         print('${docSnapshot.id} => ${docSnapshot.data()}');
-  //       }
-  //     },
-  //     onError: (e) => print("Error completing: $e"),
-  //   );
-  // }
 
   void postFeed(FeedModel feed) async {
     final String dateTime = DateTime.now().millisecondsSinceEpoch.toString();
