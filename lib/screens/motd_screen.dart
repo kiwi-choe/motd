@@ -1,13 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:motd/main.dart';
 import 'package:motd/screens/photo_editor/photo_editor_screen.dart';
 import 'package:motd/service/feed_query.dart';
 import 'package:motd/service/feed_service.dart';
 import 'package:motd/service/model/feed_model.dart';
 import 'package:motd/service/model/feed_response.dart';
-import 'package:motd/widget/photo_card.dart';
 
 class MotdScreen extends StatefulWidget {
   const MotdScreen({super.key});
@@ -59,60 +56,60 @@ class _MotdScreenState extends State<MotdScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          const SizedBox(width: 16),
-          FloatingActionButton(
-            onPressed: () {
-              _navigateAndDisplaySelection(context);
-            },
-            child: const Icon(Icons.add),
-          ),
-        ],
-      ),
-      backgroundColor: Colors.white,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          StreamBuilder<QuerySnapshot<FeedResponse>>(
-            stream: _feedService.getFeedStream(FeedQuery.recent),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Center(
-                  child: Text(snapshot.error.toString()),
-                );
-              }
-
-              if (!snapshot.hasData) {
-                return const Center(child: CircularProgressIndicator());
-              }
-
-              final data = snapshot.requireData;
-              return GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3, // number of items in each row
-                  mainAxisSpacing: 8.0, // spacing between rows
-                  crossAxisSpacing: 8.0, // spacing between columns
-                ),
-                scrollDirection: Axis.vertical,
-                itemCount: data.size,
-                itemBuilder: (context, index) {
-                  debugPrint('index: $index');
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: PhotoCard(photoModel: data.docs[index].data()),
-                  );
-                },
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            const SizedBox(width: 16),
+            FloatingActionButton(
+              onPressed: () {
+                _navigateAndDisplaySelection(context);
+              },
+              child: const Icon(Icons.add),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.white,
+        body: StreamBuilder<QuerySnapshot<FeedResponse>>(
+          stream: _feedService.getFeedStream(FeedQuery.recent),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(snapshot.error.toString()),
               );
-              // return Column(
-              //   children: [PhotoCard(photoModel: data.docs.first.data())],
-              // );
-            },
-          )
-        ],
+            }
+
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            final data = snapshot.requireData;
+            return GridView.builder(
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, // number of items in each row
+                mainAxisSpacing: 8.0, // spacing between rows
+                crossAxisSpacing: 8.0, // spacing between columns
+              ),
+              scrollDirection: Axis.vertical,
+              itemCount: data.size,
+              itemBuilder: (context, index) {
+                debugPrint('index: $index');
+                return GridTile(
+                  child: Image.network(data.docs[index].data().imageUrl),
+                );
+
+                // return Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: PhotoCard(photoModel: data.docs[index].data()),
+                // );
+              },
+            );
+            // return Column(
+            //   children: [PhotoCard(photoModel: data.docs.first.data())],
+            // );
+          },
+        )
+
         // Expanded(
         //   child: GridView.builder(
         //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -135,7 +132,7 @@ class _MotdScreenState extends State<MotdScreen> {
         //     },
         //   ),
         // ),
-      ),
-    );
+
+        );
   }
 }
