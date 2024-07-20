@@ -1,8 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:motd/main.dart';
-import 'package:motd/service/model/w4m_response.dart';
-import 'package:motd/service/w4m_service.dart';
 import 'package:motd/widget/input_walking_count.dart';
 import 'package:motd/widget/total_walking_view.dart';
 

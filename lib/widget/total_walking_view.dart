@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:motd/service/model/w4m_response.dart';
 
 class TotalWalkingView extends StatefulWidget {
   final int totalWalkCount;
@@ -29,7 +27,7 @@ class _TotalWalkingViewState extends State<TotalWalkingView> {
         image: const DecorationImage(
           fit: BoxFit.cover,
           image: AssetImage(
-            "images/insummer.png",
+            "assets/images/insummer.png",
           ),
         ),
       ),
