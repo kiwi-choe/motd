@@ -72,7 +72,7 @@ class NoticeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      color: const Color(0xFFd5e2f1),
+      color: Colors.grey.shade200,
       clipBehavior: Clip.hardEdge,
       child: SizedBox(
         height: 150,

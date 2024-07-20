@@ -32,18 +32,17 @@ class _MotdScreenState extends State<MotdScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          const SizedBox(width: 16),
-          FloatingActionButton(
-            onPressed: () {
-              _navigateAndDisplaySelection(context);
-            },
-            child: const Icon(Icons.add),
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.yellow,
+        foregroundColor: const Color(0xFF2f72ba),
+        onPressed: () {
+          _navigateAndDisplaySelection(context);
+        },
+        child: const Icon(
+          Icons.add,
+        ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: StreamBuilder<QuerySnapshot<FeedResponse>>(
         stream: _feedService.getFeedStream(FeedQuery.recent),
         builder: (context, snapshot) {

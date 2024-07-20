@@ -48,24 +48,76 @@ class _PhotoEditorScreenState extends State<PhotoEditorScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그 닫기
+              },
+            ),
+          ],
+        ),
+        actionsAlignment: MainAxisAlignment.spaceEvenly,
         actions: <Widget>[
-          TextButton(
-            child: const Text('Photo Gallery'),
-            onPressed: () {
-              // close the options modal
-              Navigator.of(context).pop();
-              // get image from gallery
-              getImageFromGallery();
-            },
+          Column(
+            children: [
+              InkWell(
+                onTap: () {
+                  // close the options modal
+                  Navigator.of(context).pop();
+                  // get image from gallary
+                  getImageFromGallery();
+                },
+                child: Container(
+                  clipBehavior: Clip.hardEdge,
+                  decoration: ShapeDecoration(
+                      color: Colors.grey.shade200,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(8),
+                        ),
+                      )),
+                  height: 60,
+                  width: 60,
+                  child: const Icon(Icons.photo_library_outlined),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.0),
+                child: Text('갤러리'),
+              ),
+            ],
           ),
-          TextButton(
-            child: const Text('Camera'),
-            onPressed: () {
-              // close the options modal
-              Navigator.of(context).pop();
-              // get image from camera
-              getImageFromCamera();
-            },
+          Column(
+            children: [
+              InkWell(
+                onTap: () {
+                  // close the options modal
+                  Navigator.of(context).pop();
+                  // get image from camera
+                  getImageFromCamera();
+                },
+                child: Container(
+                  clipBehavior: Clip.hardEdge,
+                  decoration: ShapeDecoration(
+                      color: Colors.grey.shade200,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(8),
+                        ),
+                      )),
+                  height: 60,
+                  width: 60,
+                  child: const Icon(Icons.camera_alt_rounded),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.0),
+                child: Text('카메라'),
+              ),
+            ],
           ),
         ],
       ),
@@ -126,7 +178,11 @@ class _PhotoEditorScreenState extends State<PhotoEditorScreen> {
       FeedService().postFeed(FeedModel(image, "", content));
       Navigator.pop(context);
     } else {
-      logger.d("File image is null");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('사진을 추가해주세요~'),
+        ),
+      );
     }
   }
 
@@ -148,11 +204,30 @@ class _PhotoEditorScreenState extends State<PhotoEditorScreen> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text('No Image selected'),
-        IconButton(
+        Image.asset(
+          "assets/images/upload_image.png",
+          height: 150,
+          fit: BoxFit.contain,
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        FloatingActionButton(
+          backgroundColor: Colors.yellow,
+          foregroundColor: const Color(0xFF2f72ba),
           onPressed: showOptions,
-          icon: const Icon(Icons.add),
-          iconSize: 20,
+          child: const Icon(
+            Icons.add,
+          ),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        const Text(
+          "오늘의 기적을 함께 나눠요 :)",
+          style: TextStyle(
+            fontSize: 18,
+          ),
         ),
       ],
     );
