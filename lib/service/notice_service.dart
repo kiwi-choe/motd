@@ -12,13 +12,15 @@ class NoticeService {
     return FirebaseFirestore.instance
         .collection('notices')
         .withConverter<NoticeResponse>(
-      fromFirestore: (snapshots, _) {
-        return NoticeResponse.fromJson(snapshots.data()!);
-      },
-      toFirestore: (notice, _) {
-        logger.d(notice);
-        return notice.toJson();
-      },
-    ).snapshots();
+          fromFirestore: (snapshots, _) {
+            return NoticeResponse.fromJson(snapshots.data()!);
+          },
+          toFirestore: (notice, _) {
+            logger.d(notice);
+            return notice.toJson();
+          },
+        )
+        .where("active", isEqualTo: true)
+        .snapshots();
   }
 }

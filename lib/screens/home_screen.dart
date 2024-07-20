@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:motd/screens/motd_screen.dart';
 import 'package:motd/screens/notice_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _tabs = const [
     NoticeScreen(),
     MotdScreen(),
@@ -21,7 +27,7 @@ class HomeScreen extends StatelessWidget {
               icon: const Icon(
                 Icons.question_mark_rounded,
               ),
-              onPressed: () => onQuestionPressed(context),
+              onPressed: _onQuestionPressed,
             )
           ],
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -38,6 +44,16 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _onQuestionPressed() async {
+    final kakaotalkChannelUrl = Uri.parse("https://pf.kakao.com/_nUIBxb");
+
+    if (await canLaunchUrl(kakaotalkChannelUrl)) {
+      launchUrl(kakaotalkChannelUrl);
+    } else {
+      throw Exception('Could not launch $kakaotalkChannelUrl');
+    }
   }
 
   TabBar _getTabBar() {
@@ -60,11 +76,4 @@ class HomeScreen extends StatelessWidget {
       dividerHeight: 0,
     );
   }
-}
-
-void onQuestionPressed(BuildContext context) {
-  SnackBar snackBar =
-      const SnackBar(content: Text("landing to kakaotalk channel"));
-  ScaffoldMessenger.of(context).clearSnackBars();
-  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
