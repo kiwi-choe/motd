@@ -56,14 +56,16 @@ class FeedService {
     return FirebaseFirestore.instance
         .collection('feeds')
         .withConverter<FeedResponse>(
-      fromFirestore: (snapshots, _) {
-        return FeedResponse.fromJson(snapshots.data()!);
-      },
-      toFirestore: (feed, _) {
-        logger.d(feed);
-        return feed.toJson();
-      },
-    ).snapshots();
+          fromFirestore: (snapshots, _) {
+            return FeedResponse.fromJson(snapshots.data()!);
+          },
+          toFirestore: (feed, _) {
+            logger.d(feed);
+            return feed.toJson();
+          },
+        )
+        .orderBy("dateTime", descending: true)
+        .snapshots();
   }
 }
 
