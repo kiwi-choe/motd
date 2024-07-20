@@ -154,7 +154,7 @@ class _PhotoEditorScreenState extends State<PhotoEditorScreen> {
           children: [
             Expanded(
               child: Card.filled(
-                color: Colors.blue[100],
+                color: Colors.grey.shade200,
                 child: SizedBox(
                   width: double.infinity,
                   child:
@@ -207,6 +207,7 @@ class _PhotoEditorScreenState extends State<PhotoEditorScreen> {
         Image.asset(
           "assets/images/upload_image.png",
           height: 150,
+          color: Colors.grey.withOpacity(0.5),
           fit: BoxFit.contain,
         ),
         const SizedBox(

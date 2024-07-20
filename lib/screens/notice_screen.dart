@@ -71,7 +71,7 @@ class NoticeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 0,
+      elevation: 2,
       color: Colors.grey.shade200,
       clipBehavior: Clip.hardEdge,
       child: SizedBox(
@@ -106,26 +106,33 @@ class NoticeCard extends StatelessWidget {
     );
   }
 
-  Future<Widget?> navigateToDetailScreen(BuildContext context) {
-    return Navigator.push(
-      context,
-      MaterialPageRoute<Widget>(
-        builder: (BuildContext context) {
-          switch (notice.name) {
-            case "w4m":
-              return const W4mDetailScreen();
+  Future<Widget?>? navigateToDetailScreen(BuildContext context) {
+    if (notice.name == "w4m") {
+      return Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const W4mDetailScreen()));
+    } else {
+      return null;
+    }
+    // todo detail page 만들기
+    // return Navigator.push(
+    //   context,
+    //   MaterialPageRoute<Widget>(
+    //     builder: (BuildContext context) {
+    //       switch (notice.name) {
+    //         case "w4m":
+    //           return const W4mDetailScreen();
 
-            case "senior":
-              return const SeniorDetailScreen();
+    //         case "senior":
+    //           return const SeniorDetailScreen();
 
-            case "childrenCenter":
-              return const ChildrenCenterDetailScreen();
+    //         case "childrenCenter":
+    //           return const ChildrenCenterDetailScreen();
 
-            default:
-              return const Text("default detail screen");
-          }
-        },
-      ),
-    );
+    //         default:
+    //           return const Text("default detail screen");
+    //       }
+    //     },
+    //   ),
+    // );
   }
 }
