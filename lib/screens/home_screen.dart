@@ -16,11 +16,13 @@ class HomeScreen extends StatelessWidget {
       length: _tabs.length,
       child: Scaffold(
         appBar: AppBar(
-          actions: const [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Icon(Icons.question_mark_rounded),
-            ),
+          actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.question_mark_rounded,
+              ),
+              onPressed: () => onQuestionPressed(context),
+            )
           ],
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           flexibleSpace: SafeArea(
@@ -58,4 +60,11 @@ class HomeScreen extends StatelessWidget {
       dividerHeight: 0,
     );
   }
+}
+
+void onQuestionPressed(BuildContext context) {
+  SnackBar snackBar =
+      const SnackBar(content: Text("landing to kakaotalk channel"));
+  ScaffoldMessenger.of(context).clearSnackBars();
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

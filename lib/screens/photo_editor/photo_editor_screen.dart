@@ -82,6 +82,7 @@ class _PhotoEditorScreenState extends State<PhotoEditorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),

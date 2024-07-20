@@ -26,7 +26,6 @@ class _MotdScreenState extends State<MotdScreen> {
     );
     setState(() {
       debugPrint("navigate pop result: $result");
-      // photoCards.add(result as FeedModel);
     });
   }
 
