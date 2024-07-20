@@ -1,9 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:motd/main.dart';
+import 'package:motd/service/model/w4m_response.dart';
+import 'package:motd/service/w4m_service.dart';
 import 'package:motd/widget/input_walking_count.dart';
+import 'package:motd/widget/total_walking_view.dart';
 
-class W4mDetailScreen extends StatelessWidget {
+class W4mDetailScreen extends StatefulWidget {
   const W4mDetailScreen({super.key});
 
+  @override
+  State<W4mDetailScreen> createState() => _W4mDetailScreenState();
+}
+
+class _W4mDetailScreenState extends State<W4mDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,6 +21,43 @@ class W4mDetailScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: const Text("함께 걸어요 walking for miracle"),
       ),
+      //   body: StreamBuilder<QuerySnapshot<W4mResponse>>(
+      //     stream: W4mService().getW4mStream(),
+      //     builder: (context, snapshot) {
+      //       if (snapshot.hasError) {
+      //         return Center(
+      //           child: Text(snapshot.error.toString()),
+      //         );
+      //       }
+
+      //       var totalWalkCount = 0;
+      //       List<QueryDocumentSnapshot<W4mResponse>>? docs;
+      //       if (!snapshot.hasData) {
+      //         totalWalkCount = 0;
+      //       } else {
+      //         docs = snapshot.requireData.docs;
+      //         logger.d("w4m data: ${docs.first.data().toString()}");
+      //       }
+
+      //       return Padding(
+      //         padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+      //         child: SingleChildScrollView(
+      //           physics: const BouncingScrollPhysics(),
+      //           child: Column(
+      //             crossAxisAlignment: CrossAxisAlignment.stretch,
+      //             children: [
+      //               TotalWalkingView(
+      //                 totalWalkCount: totalWalkCount,
+      //               ),
+      //               InputWalkingCount(
+      //                 docs: docs,
+      //               ),
+      //             ],
+      //           ),
+      //         ),
+      //       );
+      //     },
+      //   ),
       body: const Padding(
         padding: EdgeInsets.symmetric(vertical: 32, horizontal: 16),
         child: SingleChildScrollView(
@@ -18,48 +65,15 @@ class W4mDetailScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              TotalWalkingView(),
-              InputWalkingCount(),
+              TotalWalkingView(
+                totalWalkCount: 1111,
+              ),
+              InputWalkingCount(
+                docs: null,
+              ),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class TotalWalkingView extends StatelessWidget {
-  const TotalWalkingView({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 300.0,
-      height: 300.0,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          width: 8,
-          color: const Color(0xFF2f72ba),
-        ),
-        image: const DecorationImage(
-          fit: BoxFit.cover,
-          image: AssetImage(
-            "images/insummer.png",
-          ),
-        ),
-      ),
-      child: const Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("함께 걸은 걸음"),
-          Text(
-            "12345",
-            style: TextStyle(fontSize: 60),
-          ),
-        ],
       ),
     );
   }

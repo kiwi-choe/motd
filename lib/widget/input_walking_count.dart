@@ -1,9 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:motd/service/model/w4m_model.dart';
+import 'package:motd/service/model/w4m_response.dart';
+import 'package:motd/service/w4m_service.dart';
 
 class InputWalkingCount extends StatefulWidget {
-  const InputWalkingCount({super.key});
+  const InputWalkingCount({
+    super.key,
+    required this.docs,
+  });
 
+  final List<QueryDocumentSnapshot<W4mResponse>>? docs;
   @override
   State<InputWalkingCount> createState() => _InputWalkingCountState();
 }
@@ -14,7 +22,7 @@ class _InputWalkingCountState extends State<InputWalkingCount> {
   String name = '';
   int phoneNumber = 0;
   String place = '';
-  int walkingCount = 0;
+  int walkCount = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +91,7 @@ class _InputWalkingCountState extends State<InputWalkingCount> {
                     label: '걸음 수',
                     onSaved: (val) {
                       setState(() {
-                        walkingCount = int.tryParse(val) ?? 0;
+                        walkCount = int.tryParse(val) ?? 0;
                       });
                     },
                     validator: (val) {
@@ -153,6 +161,15 @@ class _InputWalkingCountState extends State<InputWalkingCount> {
           // save validated values
           _formKey.currentState?.save();
 
+          W4mService().postWalkLog(
+            W4mModel(
+              name: name,
+              phoneNumber: phoneNumber,
+              place: place,
+              walkCount: walkCount,
+            ),
+          );
+
           // If the form is valid, display a snackbar. In the real world,
           // you'd often call a server or save the information in a database.
           ScaffoldMessenger.of(context).showSnackBar(
@@ -184,7 +201,7 @@ class _InputWalkingCountState extends State<InputWalkingCount> {
           'place: $place',
         ),
         Text(
-          'walkingCount: $walkingCount',
+          'walkCount: $walkCount',
         ),
       ],
     );
