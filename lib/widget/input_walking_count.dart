@@ -156,28 +156,34 @@ class _InputWalkingCountState extends State<InputWalkingCount> {
         backgroundColor: const Color(0xFF2f72ba),
       ),
       onPressed: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('7월 25일에 만나요!'),
+          ),
+        );
+        // todo test완료후 풀기
         // Validate returns true if the form is valid, or false otherwise.
-        if (_formKey.currentState!.validate()) {
-          // save validated values
-          _formKey.currentState?.save();
+        // if (_formKey.currentState!.validate()) {
+        //   // save validated values
+        //   _formKey.currentState?.save();
 
-          W4mService().postWalkLog(
-            W4mModel(
-              name: name,
-              phoneNumber: phoneNumber,
-              place: place,
-              walkCount: walkCount,
-            ),
-          );
+        //   W4mService().postWalkLog(
+        //     W4mModel(
+        //       name: name,
+        //       phoneNumber: phoneNumber,
+        //       place: place,
+        //       walkCount: walkCount,
+        //     ),
+        //   );
 
-          // If the form is valid, display a snackbar. In the real world,
-          // you'd often call a server or save the information in a database.
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('저장완료!'),
-            ),
-          );
-        }
+        //   // If the form is valid, display a snackbar. In the real world,
+        //   // you'd often call a server or save the information in a database.
+        //   ScaffoldMessenger.of(context).showSnackBar(
+        //     const SnackBar(
+        //       content: Text('저장 완료!'),
+        //     ),
+        //   );
+        // }
       },
       child: const Padding(
         padding: EdgeInsets.symmetric(vertical: 16.0),
