@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:motd/main.dart';
 import 'package:motd/service/feed_service.dart';
 import 'package:motd/service/model/feed_model.dart';
 import 'package:motd/widget/edittext_form.dart';

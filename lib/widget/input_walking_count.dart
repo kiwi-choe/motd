@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:motd/service/model/w4m_model.dart';
 import 'package:motd/service/model/w4m_response.dart';
-import 'package:motd/service/w4m_service.dart';
 
 class InputWalkingCount extends StatefulWidget {
   const InputWalkingCount({
