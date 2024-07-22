@@ -1,5 +1,5 @@
 BASE_HREF = '/'
-GITHUB_REPO = https://github.com/kiwi-choe/motd.git
+GITHUB_REPO = https://github.com/kiwi-choe/motd.github.io.git
 BUILD_VERSION := $(shell grep 'version:' pubspec.yaml | awk '{print $$2}')
 CUSTOM_DOMAIN = motd.or.kr
 

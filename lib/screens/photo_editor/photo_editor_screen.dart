@@ -224,7 +224,7 @@ class _PhotoEditorScreenState extends State<PhotoEditorScreen> {
           height: 16,
         ),
         const Text(
-          "오늘의 기적을 함께 나눠요 :)))",
+          "오늘의 기적을 함께 나눠요 :)",
           style: TextStyle(
             fontSize: 18,
           ),
