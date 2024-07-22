@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:motd/screens/guide_screen.dart';
 import 'package:motd/screens/motd_screen.dart';
 import 'package:motd/screens/notice_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,8 +13,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _tabs = const [
-    NoticeScreen(),
     MotdScreen(),
+    GuideScreen(),
+    NoticeScreen(),
   ];
 
   @override
@@ -65,11 +67,15 @@ class _HomeScreenState extends State<HomeScreen> {
       tabs: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8),
-          child: Tab(text: '공지'),
+          child: Tab(text: 'M'),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8),
           child: Tab(text: 'MOTD'),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8),
+          child: Tab(text: '공지'),
         ),
       ],
       tabAlignment: TabAlignment.center,
