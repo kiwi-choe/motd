@@ -58,7 +58,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
   }
 }
 
-class NoticeCard extends StatelessWidget {
+class NoticeCard extends StatefulWidget {
   final NoticeResponse notice;
 
   const NoticeCard({
@@ -67,45 +67,41 @@ class NoticeCard extends StatelessWidget {
   });
 
   @override
+  State<NoticeCard> createState() => _NoticeCardState();
+}
+
+class _NoticeCardState extends State<NoticeCard> {
+  @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 2,
-      color: Colors.grey.shade200,
+      color: widget.notice.name.toColor(),
       clipBehavior: Clip.hardEdge,
-      child: SizedBox(
-        height: 150,
-        child: Stack(
-          children: [
-            notice.imageUrl?.isNotEmpty == true
-                ? SizedBox.expand(
-                    child: CachedNetworkImage(
-                      fit: BoxFit.cover,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SizedBox(
+          height: 150,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              widget.notice.imageUrl?.isNotEmpty == true
+                  ? CachedNetworkImage(
+                      fit: BoxFit.contain,
                       placeholder: (context, url) => const ImagePlaceholder(),
-                      imageUrl: notice.imageUrl!,
-                    ),
-                  )
-                : notice.name?.isNotEmpty == true
-                    ? Center(
-                        child: Text(
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          notice.name != null ? notice.name! : "",
-                        ),
-                      )
-                    : const Text(""),
-            GestureDetector(
-              onTap: () => navigateToDetailScreen(context),
-            )
-          ],
+                      imageUrl: widget.notice.imageUrl!,
+                    )
+                  : const Text(""),
+              GestureDetector(
+                onTap: () => navigateToDetailScreen(context),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 
   Future<Widget?>? navigateToDetailScreen(BuildContext context) {
-    if (notice.name == "w4m") {
+    if (widget.notice.name == "w4m") {
       return Navigator.push(context,
           MaterialPageRoute(builder: (context) => const W4mDetailScreen()));
     } else {
@@ -132,5 +128,23 @@ class NoticeCard extends StatelessWidget {
     //     },
     //   ),
     // );
+  }
+}
+
+extension on String? {
+  Color toColor() {
+    switch (this) {
+      case "w4m":
+        return const Color(0xFF3a71b6);
+
+      case "senior":
+        return const Color(0xFFc5aed1);
+
+      case "childrenCenter":
+        return const Color(0xFFfdf237);
+
+      default:
+        return Colors.grey.shade200;
+    }
   }
 }
