@@ -60,14 +60,10 @@ class _MotdScreenState extends State<MotdScreen> {
 
           if (data.size == 0) {
             return Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 32.0, horizontal: 24.0),
+              padding: const EdgeInsets.only(right: 16.0),
               child: Container(
                 alignment: Alignment.center,
-                child: const Text(
-                  "2024년 여름 ‘miracles on thursday’에 초대합니다.\n\n",
-                  style: TextStyle(fontSize: 20),
-                ),
+                child: Image.asset('assets/images/m.png'),
               ),
             );
           }
