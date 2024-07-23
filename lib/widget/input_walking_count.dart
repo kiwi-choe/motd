@@ -1,15 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:motd/service/model/w4m_response.dart';
+import 'package:motd/service/model/w4m_model.dart';
+import 'package:motd/service/w4m_service.dart';
 
 class InputWalkingCount extends StatefulWidget {
   const InputWalkingCount({
     super.key,
-    required this.docs,
   });
 
-  final List<QueryDocumentSnapshot<W4mResponse>>? docs;
   @override
   State<InputWalkingCount> createState() => _InputWalkingCountState();
 }
@@ -102,7 +100,7 @@ class _InputWalkingCountState extends State<InputWalkingCount> {
                   const SizedBox(
                     height: 16,
                   ),
-                  renderButton(),
+                  _renderButton(),
                 ],
               ),
             ),
@@ -148,41 +146,12 @@ class _InputWalkingCountState extends State<InputWalkingCount> {
     );
   }
 
-  renderButton() {
+  _renderButton() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color(0xFF2f72ba),
       ),
-      onPressed: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('7월 25일에 만나요!'),
-          ),
-        );
-        // todo test완료후 풀기
-        // Validate returns true if the form is valid, or false otherwise.
-        // if (_formKey.currentState!.validate()) {
-        //   // save validated values
-        //   _formKey.currentState?.save();
-
-        //   W4mService().postWalkLog(
-        //     W4mModel(
-        //       name: name,
-        //       phoneNumber: phoneNumber,
-        //       place: place,
-        //       walkCount: walkCount,
-        //     ),
-        //   );
-
-        //   // If the form is valid, display a snackbar. In the real world,
-        //   // you'd often call a server or save the information in a database.
-        //   ScaffoldMessenger.of(context).showSnackBar(
-        //     const SnackBar(
-        //       content: Text('저장 완료!'),
-        //     ),
-        //   );
-        // }
-      },
+      onPressed: _saveWalkingCount,
       child: const Padding(
         padding: EdgeInsets.symmetric(vertical: 16.0),
         child: Center(
@@ -196,18 +165,31 @@ class _InputWalkingCountState extends State<InputWalkingCount> {
     );
   }
 
-  renderValues() {
-    return Column(
-      children: [
-        Text('name: $name'),
-        Text('phoneNumber: $phoneNumber'),
-        Text(
-          'place: $place',
+  // GlobalKey를 사용하여 각 TextFormField의 상태를 관리합니다.
+  void _saveWalkingCount() {
+    // Validate returns true if the form is valid, or false otherwise.
+    if (_formKey.currentState!.validate()) {
+      // save validated values
+      _formKey.currentState?.save();
+
+      W4mService().postWalkLog(
+        W4mModel(
+          name: name,
+          phoneNumber: phoneNumber,
+          place: place,
+          walkCount: walkCount,
         ),
-        Text(
-          'walkCount: $walkCount',
+      );
+
+      _formKey.currentState?.reset();
+
+      // If the form is valid, display a snackbar. In the real world,
+      // you'd often call a server or save the information in a database.
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('저장 완료!'),
         ),
-      ],
-    );
+      );
+    }
   }
 }

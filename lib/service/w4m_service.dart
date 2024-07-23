@@ -31,34 +31,53 @@ class W4mService {
       final QuerySnapshot querySnapshot =
           await walklogRef.orderBy('dateTime', descending: true).limit(1).get();
 
+      int totalWalkCount = 0;
       if (querySnapshot.docs.isNotEmpty) {
         var lastDoc = querySnapshot.docs.first;
 
         FirebaseFirestore.instance.runTransaction((transaction) async {
           final snapshot = await transaction.get(lastDoc.reference);
-          int totalWalkCount = snapshot.get("totalWalkCount");
-
-          // post walkLog
-          await walklogRef
-              .add(
-                W4mResponse(
-                  name: model.name,
-                  phoneNumber: model.phoneNumber,
-                  place: model.place,
-                  walkCount: model.walkCount,
-                  totalWalkCount: totalWalkCount + model.walkCount,
-                  dateTime: Timestamp.now(),
-                ).toJson(),
-              )
-              .then(
-                (docSnapshot) =>
-                    logger.d('Added data with ID: ${docSnapshot.id}'),
-              );
-        }).then((value) => logger.d("Success to post walklog"),
-            onError: (e) => logger.e("error Post walklog $e"));
+          totalWalkCount = snapshot.get("totalWalkCount");
+        }).then(
+          (value) {
+            // post walkLog
+            walklogRef
+                .add(
+                  W4mResponse(
+                    name: model.name,
+                    phoneNumber: model.phoneNumber,
+                    place: model.place,
+                    walkCount: model.walkCount,
+                    totalWalkCount: totalWalkCount + model.walkCount,
+                    dateTime: Timestamp.now(),
+                  ).toJson(),
+                )
+                .then(
+                  (docSnapshot) =>
+                      logger.d('Added data with ID: ${docSnapshot.id}'),
+                );
+            logger.d("Success to post walklog");
+          },
+          onError: (e) => logger.e("error Post walklog $e"),
+        );
       } else {
-        // rollback the trasaction
-        throw "no document found";
+        logger.d('no document. this is a first doc');
+        // post walkLog
+        await walklogRef
+            .add(
+              W4mResponse(
+                name: model.name,
+                phoneNumber: model.phoneNumber,
+                place: model.place,
+                walkCount: model.walkCount,
+                totalWalkCount: totalWalkCount + model.walkCount,
+                dateTime: Timestamp.now(),
+              ).toJson(),
+            )
+            .then(
+              (docSnapshot) =>
+                  logger.d('Added data with ID: ${docSnapshot.id}'),
+            );
       }
     } catch (e) {
       logger.e('Error adding document: $e');

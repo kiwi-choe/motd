@@ -8,7 +8,7 @@ class W4mResponse {
   final String? place;
   final int? walkCount;
   final int? totalWalkCount;
-  final Timestamp dateTime;
+  final Timestamp? dateTime;
 
   const W4mResponse({
     required this.name,
