@@ -131,7 +131,7 @@ class _InputWalkingCountState extends State<InputWalkingCount> {
         ),
         TextFormField(
           keyboardType:
-              isNumberType ? TextInputType.number : TextInputType.none,
+              isNumberType ? TextInputType.number : TextInputType.text,
           inputFormatters: isNumberType
               ? <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly]
               : null,

@@ -15,7 +15,8 @@ void main() async {
     persistenceEnabled: true,
   );
 
-  // FeedService().getFeeds();
+  debugInvertOversizedImages = true;
+
   runApp(const App());
 }
 

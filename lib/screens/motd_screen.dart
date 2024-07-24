@@ -68,24 +68,24 @@ class _MotdScreenState extends State<MotdScreen> {
             );
           }
 
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: GridView.builder(
-              shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // number of items in each row
-                mainAxisSpacing: 8.0, // spacing between rows
-                crossAxisSpacing: 8.0, // spacing between columns
-              ),
-              scrollDirection: Axis.vertical,
-              itemCount: data.size,
-              itemBuilder: (context, index) {
-                debugPrint('index: $index');
-                return GridTile(
-                  child: PhotoCard(photoModel: data.docs[index].data()),
-                );
-              },
+          return GridView.builder(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 32,
             ),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+            ),
+            scrollDirection: Axis.vertical,
+            itemCount: data.size,
+            itemBuilder: (context, index) {
+              debugPrint('index: $index');
+              return GridTile(
+                child: PhotoCard(photoModel: data.docs[index].data()),
+              );
+            },
           );
         },
       ),
