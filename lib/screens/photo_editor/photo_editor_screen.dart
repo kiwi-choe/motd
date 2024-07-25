@@ -161,10 +161,10 @@ class _PhotoEditorScreenState extends State<PhotoEditorScreen> {
                 ),
               ),
             ),
-            EditTextForm(
-              getContent: _handleTapboxChanged,
-              hintText: '#워킹포미라클 #삼성동독거노인굿모닝 #장애인복지센터방문 #나의MOTD',
-            ),
+            // EditTextForm(
+            //   getContent: _handleTapboxChanged,
+            //   hintText: '#워킹포미라클 #삼성동독거노인굿모닝 #장애인복지센터방문 #나의MOTD',
+            // ),
           ],
         ),
       ),

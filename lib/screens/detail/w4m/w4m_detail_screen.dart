@@ -55,12 +55,35 @@ class _W4mDetailScreenState extends State<W4mDetailScreen> {
                   const SizedBox(
                     height: 24,
                   ),
-                  _renderButton()
+                  _renderButton(),
+                  _renderDescription(),
                 ],
               ),
             ),
           );
         },
+      ),
+    );
+  }
+
+  _renderDescription() {
+    return Container(
+      alignment: Alignment.center,
+      padding: const EdgeInsets.only(top: 24),
+      child: const Text(
+        "워킹포 미라클 헌금 방법\n\n"
+        "자신이 걸은 걸음 수만큼 헌금해주시면\n"
+        "‘굿모닝 프로젝트’와 ‘장애인 센터 돌봄’사역에 사용됩니다.\n\n"
+        "헌금을 하지 않고\n걷고 기도만 해주셔도 좋습니다.\n\n"
+        "부족한 금액은 빛의교회가 준비해서\n"
+        "보내도록 하겠습니다.\n\n"
+        "[헌금하는 방법]\n"
+        "입금계좌 : 신한은행 140-010-317409 빛의교회 (선교)\n"
+        "입금자명 : 홍길동 motd\n\n",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 16,
+        ),
       ),
     );
   }

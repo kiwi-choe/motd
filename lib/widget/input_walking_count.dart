@@ -30,15 +30,8 @@ class _InputWalkingCountState extends State<InputWalkingCount> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "이만큼 걸었어요!",
-            style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 20,
-            ),
-          ),
           const SizedBox(
-            height: 16,
+            height: 24,
           ),
           Form(
             child: Form(

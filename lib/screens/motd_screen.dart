@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:motd/screens/photo_editor/photo_editor_screen.dart';
 import 'package:motd/service/feed_query.dart';
 import 'package:motd/service/feed_service.dart';
@@ -68,23 +69,19 @@ class _MotdScreenState extends State<MotdScreen> {
             );
           }
 
-          return GridView.builder(
+          return AlignedGridView.count(
             padding: const EdgeInsets.symmetric(
               horizontal: 16,
               vertical: 32,
             ),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-            ),
+            crossAxisCount: 2,
+            mainAxisSpacing: 4,
             scrollDirection: Axis.vertical,
+            crossAxisSpacing: 4,
             itemCount: data.size,
             itemBuilder: (context, index) {
               debugPrint('index: $index');
-              return GridTile(
-                child: PhotoCard(photoModel: data.docs[index].data()),
-              );
+              return PhotoCard(photoModel: data.docs[index].data());
             },
           );
         },

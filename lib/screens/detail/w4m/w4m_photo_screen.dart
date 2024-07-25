@@ -178,6 +178,9 @@ class _W4mPhotoScreenState extends State<W4mPhotoScreen> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        const SizedBox(
+          height: 16,
+        ),
         Image.asset(
           "assets/images/upload_image.png",
           height: 150,
@@ -203,6 +206,9 @@ class _W4mPhotoScreenState extends State<W4mPhotoScreen> {
           style: TextStyle(
             fontSize: 18,
           ),
+        ),
+        const SizedBox(
+          height: 16,
         ),
       ],
     );
