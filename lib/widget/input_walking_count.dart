@@ -4,8 +4,11 @@ import 'package:motd/service/model/w4m_model.dart';
 import 'package:motd/service/w4m_service.dart';
 
 class InputWalkingCount extends StatefulWidget {
+  final Function() onSaveWalkingCount;
+
   const InputWalkingCount({
     super.key,
+    required this.onSaveWalkingCount,
   });
 
   @override
@@ -157,7 +160,7 @@ class _InputWalkingCountState extends State<InputWalkingCount> {
         child: Center(
           widthFactor: double.infinity,
           child: Text(
-            '저장하기',
+            '인증하기',
             style: TextStyle(color: Colors.white, fontSize: 14),
           ),
         ),
@@ -182,6 +185,9 @@ class _InputWalkingCountState extends State<InputWalkingCount> {
       );
 
       _formKey.currentState?.reset();
+
+      // callback
+      widget.onSaveWalkingCount();
 
       // If the form is valid, display a snackbar. In the real world,
       // you'd often call a server or save the information in a database.

@@ -15,7 +15,7 @@ void main() async {
     persistenceEnabled: true,
   );
 
-  debugInvertOversizedImages = true;
+  // debugInvertOversizedImages = true;
 
   runApp(const App());
 }

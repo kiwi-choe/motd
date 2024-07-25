@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:motd/main.dart';
+import 'package:motd/screens/detail/w4m/w4m_photo_screen.dart';
 import 'package:motd/service/model/w4m_response.dart';
 import 'package:motd/service/w4m_service.dart';
 import 'package:motd/widget/input_walking_count.dart';
@@ -51,7 +52,10 @@ class _W4mDetailScreenState extends State<W4mDetailScreen> {
                   TotalWalkingView(
                     totalWalkCount: totalWalkCount,
                   ),
-                  const InputWalkingCount(),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  _renderButton()
                 ],
               ),
             ),
@@ -60,7 +64,32 @@ class _W4mDetailScreenState extends State<W4mDetailScreen> {
       ),
     );
   }
+
+  _renderButton() {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFF2f72ba),
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const W4mPhotoScreen()),
+        );
+      },
+      child: const Padding(
+        padding: EdgeInsets.symmetric(vertical: 16.0),
+        child: Center(
+          widthFactor: double.infinity,
+          child: Text(
+            '걸으며 사진 찍어 올리기',
+            style: TextStyle(color: Colors.white, fontSize: 14),
+          ),
+        ),
+      ),
+    );
+  }
 }
+
 
 // class W4mGuideView extends StatelessWidget {
 //   const W4mGuideView({super.key});
