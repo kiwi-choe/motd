@@ -4,7 +4,6 @@ import 'package:motd/main.dart';
 import 'package:motd/screens/detail/w4m/w4m_photo_screen.dart';
 import 'package:motd/service/model/w4m_response.dart';
 import 'package:motd/service/w4m_service.dart';
-import 'package:motd/widget/input_walking_count.dart';
 import 'package:motd/widget/total_walking_view.dart';
 
 class W4mDetailScreen extends StatefulWidget {

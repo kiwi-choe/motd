@@ -5,7 +5,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:motd/service/feed_service.dart';
 import 'package:motd/service/model/feed_model.dart';
-import 'package:motd/widget/edittext_form.dart';
 
 class PhotoEditorScreen extends StatefulWidget {
   const PhotoEditorScreen({super.key});
