@@ -14,11 +14,14 @@ class NoticeScreen extends StatefulWidget {
   State<NoticeScreen> createState() => _NoticeScreenState();
 }
 
-class _NoticeScreenState extends State<NoticeScreen> {
+class _NoticeScreenState extends State<NoticeScreen>
+    with AutomaticKeepAliveClientMixin {
   final NoticeService _service = NoticeService();
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Scaffold(
       body: StreamBuilder<QuerySnapshot<NoticeResponse>>(
         stream: _service.getNoticeStream(),
@@ -56,6 +59,9 @@ class _NoticeScreenState extends State<NoticeScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class NoticeCard extends StatefulWidget {

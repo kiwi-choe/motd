@@ -14,7 +14,8 @@ class MotdScreen extends StatefulWidget {
   State<MotdScreen> createState() => _MotdScreenState();
 }
 
-class _MotdScreenState extends State<MotdScreen> {
+class _MotdScreenState extends State<MotdScreen>
+    with AutomaticKeepAliveClientMixin {
   final FeedService _feedService = FeedService();
   FeedQuery query = FeedQuery.recent;
 
@@ -32,6 +33,8 @@ class _MotdScreenState extends State<MotdScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.yellow,
@@ -88,4 +91,7 @@ class _MotdScreenState extends State<MotdScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
