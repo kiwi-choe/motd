@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 
-class GuideScreen extends StatelessWidget {
+class GuideScreen extends StatefulWidget {
   const GuideScreen({super.key});
 
   @override
+  State<GuideScreen> createState() => _GuideScreenState();
+}
+
+class _GuideScreenState extends State<GuideScreen>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -35,4 +43,7 @@ class GuideScreen extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
