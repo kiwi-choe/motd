@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:motd/screens/photo_editor/photo_editor_screen.dart';
@@ -17,7 +18,10 @@ class MotdScreen extends StatefulWidget {
 class _MotdScreenState extends State<MotdScreen>
     with AutomaticKeepAliveClientMixin {
   final FeedService _feedService = FeedService();
-  FeedQuery query = FeedQuery.recent;
+  // FeedQuery query = FeedQuery.recent;
+
+  @override
+  bool get wantKeepAlive => true;
 
   Future<void> _navigateAndDisplaySelection(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
@@ -47,31 +51,9 @@ class _MotdScreenState extends State<MotdScreen>
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      body: StreamBuilder<QuerySnapshot<FeedResponse>>(
-        stream: _feedService.getFeedStream(FeedQuery.recent),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text(snapshot.error.toString()),
-            );
-          }
-
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          final data = snapshot.requireData;
-
-          if (data.size == 0) {
-            return Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: Container(
-                alignment: Alignment.center,
-                child: Image.asset('assets/images/m.png'),
-              ),
-            );
-          }
-
+      body: FirestoreQueryBuilder<FeedResponse>(
+        query: _feedService.getFeeds,
+        builder: (context, snapshot, _) {
           return AlignedGridView.count(
             padding: const EdgeInsets.symmetric(
               horizontal: 16,
@@ -81,10 +63,19 @@ class _MotdScreenState extends State<MotdScreen>
             mainAxisSpacing: 4,
             scrollDirection: Axis.vertical,
             crossAxisSpacing: 4,
-            itemCount: data.size,
+            itemCount: snapshot.docs.length,
             itemBuilder: (context, index) {
-              debugPrint('index: $index');
-              return PhotoCard(photoModel: data.docs[index].data());
+              // if we reached the end of the currently obtained items, we try to
+              // obtain more items
+              if (snapshot.hasMore && index + 1 == snapshot.docs.length) {
+                // Tell FirestoreQueryBuilder to try to obtain more items.
+                // It is safe to call this function from within the build method.
+                snapshot.fetchMore();
+              }
+
+              final feed = snapshot.docs[index].data();
+
+              return PhotoCard(photoModel: feed);
             },
           );
         },
@@ -92,6 +83,13 @@ class _MotdScreenState extends State<MotdScreen>
     );
   }
 
-  @override
-  bool get wantKeepAlive => true;
+  Padding _errorView() {
+    return Padding(
+      padding: const EdgeInsets.only(right: 16.0),
+      child: Container(
+        alignment: Alignment.center,
+        child: Image.asset('assets/images/m.png'),
+      ),
+    );
+  }
 }

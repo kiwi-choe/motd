@@ -52,21 +52,18 @@ class FeedService {
   /// A reference to the list of feeds.
   /// We are using `withConverter` to ensure that interactions with the collection
   /// are type-safe.
-  Stream<QuerySnapshot<FeedResponse>> getFeedStream(FeedQuery query) {
-    return FirebaseFirestore.instance
-        .collection('feeds')
-        .withConverter<FeedResponse>(
-          fromFirestore: (snapshots, _) {
-            return FeedResponse.fromJson(snapshots.data()!);
-          },
-          toFirestore: (feed, _) {
-            logger.d(feed);
-            return feed.toJson();
-          },
-        )
-        .orderBy("dateTime", descending: true)
-        .snapshots();
-  }
+  final getFeeds = FirebaseFirestore.instance
+      .collection('feeds')
+      .orderBy("dateTime", descending: true)
+      .withConverter<FeedResponse>(
+    fromFirestore: (snapshots, _) {
+      return FeedResponse.fromJson(snapshots.data()!);
+    },
+    toFirestore: (feed, _) {
+      logger.d(feed);
+      return feed.toJson();
+    },
+  );
 }
 
 extension on Query<FeedResponse> {
