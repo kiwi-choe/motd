@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:motd/screens/photo_editor/photo_editor_screen.dart';
-import 'package:motd/service/feed_query.dart';
 import 'package:motd/service/feed_service.dart';
 import 'package:motd/service/model/feed_response.dart';
 import 'package:motd/widget/photo_card.dart';

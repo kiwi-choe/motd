@@ -185,14 +185,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.3+1"
-  firebase_cached_image:
-    dependency: "direct main"
-    description:
-      name: firebase_cached_image
-      sha256: f65d1203713f9a21ad54144fe1ce43662c7698fe75a8181a41cd99486a7d5ace
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.6.1"
   firebase_core:
     dependency: "direct main"
     description:
@@ -279,13 +271,21 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_cache_manager:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_cache_manager
-      sha256: ceff65d74d907b1b772e22cf04daad60fb472461638977d9fae8b00a63e01e3d
+      sha256: a77f77806a790eb9ba0118a5a3a936e81c4fea2b61533033b2b0c3d50bbde5ea
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.3"
+    version: "3.4.0"
+  flutter_cache_manager_firebase:
+    dependency: "direct main"
+    description:
+      name: flutter_cache_manager_firebase
+      sha256: f997d5c639c326be579590452df144abdb2fcb4d31fff3b0b7037f43161b0b73
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   flutter_image_compress:
     dependency: "direct main"
     description:
@@ -685,6 +685,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  retry:
+    dependency: transitive
+    description:
+      name: retry
+      sha256: "822e118d5b3aafed083109c72d5f484c6dc66707885e07c0fbcb8b986bba7efc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.2"
   rxdart:
     dependency: transitive
     description:
