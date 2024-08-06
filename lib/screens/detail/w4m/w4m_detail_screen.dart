@@ -81,7 +81,7 @@ class _W4mDetailScreenState extends State<W4mDetailScreen> {
         "입금자명 : 홍길동 motd\n\n",
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: 16,
+          fontSize: 14,
         ),
       ),
     );

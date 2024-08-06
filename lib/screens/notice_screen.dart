@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:motd/main.dart';
+import 'package:motd/screens/detail/children_center_detail_screen.dart';
+import 'package:motd/screens/detail/senior_detail_screen.dart';
 import 'package:motd/screens/detail/w4m/w4m_detail_screen.dart';
 import 'package:motd/service/model/notice_response.dart';
 import 'package:motd/service/notice_service.dart';
@@ -107,33 +109,29 @@ class _NoticeCardState extends State<NoticeCard> {
   }
 
   Future<Widget?>? navigateToDetailScreen(BuildContext context) {
-    if (widget.notice.name == "w4m") {
-      return Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const W4mDetailScreen()));
-    } else {
-      return null;
-    }
-    // todo detail page 만들기
-    // return Navigator.push(
-    //   context,
-    //   MaterialPageRoute<Widget>(
-    //     builder: (BuildContext context) {
-    //       switch (notice.name) {
-    //         case "w4m":
-    //           return const W4mDetailScreen();
+    return Navigator.push(
+      context,
+      MaterialPageRoute<Widget>(
+        builder: (BuildContext context) {
+          switch (widget.notice.name) {
+            case "w4m":
+              return const W4mDetailScreen();
 
-    //         case "senior":
-    //           return const SeniorDetailScreen();
+            case "senior":
+              return SeniorDetailScreen(
+                noticeColor: widget.notice.name.toColor(),
+                noticeImageUrl: widget.notice.imageUrl,
+              );
 
-    //         case "childrenCenter":
-    //           return const ChildrenCenterDetailScreen();
+            case "childrenCenter":
+              return const ChildrenCenterDetailScreen();
 
-    //         default:
-    //           return const Text("default detail screen");
-    //       }
-    //     },
-    //   ),
-    // );
+            default:
+              return const Text("default detail screen");
+          }
+        },
+      ),
+    );
   }
 }
 
