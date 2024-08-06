@@ -99,13 +99,34 @@ class _NoticeCardState extends State<NoticeCard> {
                     )
                   : const Text(""),
               GestureDetector(
-                onTap: () => navigateToDetailScreen(context),
+                onTap: () => _tempNavigateToDetailScreen(context),
               )
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<Widget?>? _tempNavigateToDetailScreen(BuildContext context) {
+    if (widget.notice.name == "w4m") {
+      return Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const W4mDetailScreen()),
+      );
+    } else if (widget.notice.name == "senior") {
+      return Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SeniorDetailScreen(
+            noticeColor: widget.notice.name.toColor(),
+            noticeImageUrl: widget.notice.imageUrl,
+          ),
+        ),
+      );
+    } else {
+      return null;
+    }
   }
 
   Future<Widget?>? navigateToDetailScreen(BuildContext context) {
@@ -123,8 +144,8 @@ class _NoticeCardState extends State<NoticeCard> {
                 noticeImageUrl: widget.notice.imageUrl,
               );
 
-            case "childrenCenter":
-              return const ChildrenCenterDetailScreen();
+            // case "childrenCenter":
+            // return const ChildrenCenterDetailScreen();
 
             default:
               return const Text("default detail screen");

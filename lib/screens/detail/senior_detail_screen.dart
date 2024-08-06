@@ -68,7 +68,7 @@ class _SeniorDetailScreenState extends State<SeniorDetailScreen> {
         "그리고 이번엔 우리가 직접 찾아가서\n"
         "얼굴을 뵙고 문안하려고 합니다.",
         style: TextStyle(
-          fontSize: 14,
+          fontSize: 16,
         ),
       ),
     );
@@ -91,6 +91,7 @@ class _SeniorDetailScreenState extends State<SeniorDetailScreen> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: noticeColor,
+                  fontSize: 16,
                 ),
               ),
               const SizedBox(
@@ -98,6 +99,10 @@ class _SeniorDetailScreenState extends State<SeniorDetailScreen> {
               ),
               const Text(
                 "8월 10일 오전 10시",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
             ],
           ),
@@ -109,6 +114,7 @@ class _SeniorDetailScreenState extends State<SeniorDetailScreen> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: noticeColor,
+                  fontSize: 16,
                 ),
               ),
               const SizedBox(
@@ -116,6 +122,10 @@ class _SeniorDetailScreenState extends State<SeniorDetailScreen> {
               ),
               const Text(
                 "빛의교회에서 출발",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
             ],
           ),
@@ -127,6 +137,7 @@ class _SeniorDetailScreenState extends State<SeniorDetailScreen> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: noticeColor,
+                  fontSize: 16,
                 ),
               ),
               const SizedBox(
@@ -134,6 +145,10 @@ class _SeniorDetailScreenState extends State<SeniorDetailScreen> {
               ),
               const Text(
                 "02-532-9826",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
             ],
           ),
